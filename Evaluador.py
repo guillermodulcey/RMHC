@@ -4,8 +4,8 @@ import sys as s
 import math as m
 
 class Evaluador():
-    def __init__(self, longitudEntera, longitud, rangoInicial, rangoFinal, maximizar):
-        self.longitudEntera = longitudEntera
+    def __init__(self, longitud, rangoInicial, rangoFinal, maximizar):
+        self.longitudEntera = m.ceil(m.log2(rangoFinal-rangoInicial+1))
         self.longitud = longitud
         self.rangoInicial = rangoInicial
         self.rangoFinal = rangoFinal
@@ -25,20 +25,29 @@ class Evaluador():
             contador += 1
 
         numero = parteEntera+parteDecimal
-        
-        if self.maximizar:
-            if self.verificarRango(numero):
-                return Funcion.funcion(numero)
-            else:
-                return s.float_info.min
-        else:
-            if self.verificarRango(numero):
-                return -Funcion.funcion(numero)
-            else:
-                return -s.float_info.max
+
+        valor = self.obtenerValor(numero)
+
+        return valor,self.retornarFitness(valor)
 
     def verificarRango(self, numero):
         if numero < self.rangoInicial or numero > self.rangoFinal:
             return False
         else:
             return True
+    
+    def obtenerValor(self, numero):
+        return self.rangoInicial + numero
+
+    def retornarFitness(self, valor):
+        if self.maximizar:
+            if self.verificarRango(valor):
+                return Funcion.funcion(valor)
+            else:
+                return s.float_info.min
+        else:
+            if self.verificarRango(valor):
+                return -Funcion.funcion(valor)
+            else:
+                return -s.float_info.max
+
