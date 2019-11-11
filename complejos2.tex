@@ -1,0 +1,84 @@
+\documentclass[10pt]{report}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\addtolength{\textwidth}{4cm}
+\addtolength{\hoffset}{-2cm}
+\topmargin -0.30cm
+
+\begin{document}
+\begin{titlepage}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Figuras/LogoCinvesHeader.png}\par\vspace{2cm}
+	{\scshape\LARGE Centro de Investigación y de Estudios Avanzados del IPN\par}
+	\vspace{2cm}	
+	{\huge\bfseries RMHC \par}
+	\vspace{1.5cm}
+	{\scshape\Large Tecnologías de la programación\par}
+	\vspace{2cm}
+	{\Large Miembros del equipo: \\Hernán Guillermo Dulcey Morán \\Karla Jacquelin Guzmán Sánchez\par}
+	\vfill
+
+	{\large 12 de Noviembre de 2019 \par}
+\end{titlepage}
+
+
+\section*{Introducción}
+
+El algoritmo genético RMHC (Random Mutation Hill Climbing) es un algoritmo que está diseñado para cambiar los "genes" de un "individuo" aleatoriamente con el fin de obtener una mejor versión que se acomode a la necesidad del problema.
+
+Se considera un individuo como un conjunto de caracteristicas que van a cambiar dependiendo de las instrucciones que reciba. En este caso el individuo va a cambiar un arreglo propio que se denomina "genes", que están constituido de bits (cero o unos). 
+
+Cuando el individuo muta, cambia el valor de una de sus posiciones por otro valor. Es decir, si el valor es uno pasa a ser cero, y si era cero pasa a ser uno.
+
+\section*{Problema}
+
+El problema que se desea resolver con RMHC es un problema de maximización. El algoritmo va a evaluar una función y va a tratar de encontrar el mayor valor para un rango de valores determinado. RMHC hará que el individuo mute un determinado número de veces e irá evaluando cada una de esas mutaciones conservando las mejores. Al terminar presentará la mejor versión de su individuo. Cabe resaltar que en muchos casos no es posible llegar a la mejor solución. Esto dependerá de el número de mutaciones realizadas y que el individuo no caiga en un optimo local.
+
+\subsection*{Representación}
+El valor de x vendrá representado por un vector de ceros y unos, el cual en su conjunto representan un número real en binario. Cada gen tiene un equivalente a una potencia de dos:
+
+\begin{equation*}
+    [1,0,1,...,1,0,1] = 2^{n}*(1)+2^{n-1}*(0)+2^{n-2}*(1)+...+2^{2}*(1)+2^{1}*(0)+2^{0}*(1)
+\end{equation*}
+Por ejemplo:
+\begin{equation*}
+    [1,0,1] = 2^{2}*(1)+2^{1}*(0)+2^{0}*(1) = 4+0+1 = 5
+\end{equation*}
+
+De igual forma, la parte decimal puede ser representada de la siguiente manera:
+
+\begin{equation*}
+    [1,0,1,...] = 2^{-1}*(1)+2^{-2}*(0)+2^{-3}*(1)+...
+\end{equation*}
+Por ejemplo:
+\begin{equation*}
+    [1,0,1] = 2^{-1}*(1)+2^{-2}*(0)+2^{-3}*(1) = 0.5+0.25+0.125 = 0.875
+\end{equation*}
+
+Es posible combinar las dos partes para representar un número real, para ello es necesario delimitar hasta donde va la parte entera y desde donde empieza la decimal.
+
+\subsection*{Óptimo local}
+
+Un optimo local consiste en un valor que el algoritmo reconoce como el mejor valor a pesar de que tenga opción de mejorar aún más. Por ejemplo, este algoritmo solo puede cambiar un bit a la vez, lo que puede ocasionar que si una solución requiere cambiar dos genes al tiempo, este no logré mejorar más:
+
+Por ejemplo se tienen 3 genes para buscar maximizar la función f(x) = x, donde el rango está entre 0 y 6:
+
+\begin{equation*}
+    rango = 0\leq x \leq 6
+\end{equation*}
+
+Si el individuo llega al valor de 5:
+\begin{equation*}
+    [1,0,1] = 5
+\end{equation*}
+Le es imposible salir de dicho óptimo local puesto que prender el gen faltante implica llegar a una respuesta fuera del rango. Así mismo apagar cualquier gen implica llegar a una peor respuesta.
+
+\section*{Implementación}
+
+El algoritmo RMHC se implementó en Python, con las siguientes características.
+
+\section*{Conclusión}
+
+Este algoritmo tiene sus limitantes, pero como para todo algoritmo voráz, sus respuestas se acercan mucho a la mejor, dependiendo de la cantidad de tiempo que se le de para trabajar. Una de sus mayores limitantes es el problema de entrar en óptimos locales y no tener una clara forma de salir de ellos.
+
+\end{document}

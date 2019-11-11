@@ -28,8 +28,8 @@ class RMHC():
                 self.individuo.arreglo = mutacion
                 self.valor = valor
 
-for s in range(0,100):
-    x = RMHC(0,s,1,True,0,6)
+for seed in range(0,100):
+    x = RMHC(5,seed,1,True,-1,6)
     for i in range(0,10000):
         x.mutar()
     print("Mejor: "+str(x.valor))
