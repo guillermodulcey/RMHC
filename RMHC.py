@@ -10,11 +10,11 @@ class RMHC():
     def __init__(self, longIndividuo, semilla, probabilidad, maximizar, rangoInicial, rangoFinal):
         r.seed(semilla)
 
-        self.individuo = Individuo(longIndividuo, semilla)
         self.probabilidad = probabilidad
         self.maximizar = maximizar
 
         self.e = Evaluador(longIndividuo, rangoInicial, rangoFinal, maximizar)
+        self.individuo = Individuo(self.e.longitud, semilla)
         
         self.valor, self.best = self.e.calcularFitness(self.individuo.arreglo)
 
@@ -29,9 +29,9 @@ class RMHC():
                 self.valor = valor
 
 for s in range(0,100):
-    x = RMHC(20,s,1,True,-7,7)
+    x = RMHC(0,s,1,True,0,6)
     for i in range(0,10000):
         x.mutar()
-    #valor,fitness = x.e.calcularFitness(x.individuo.arreglo)
     print("Mejor: "+str(x.valor))
+    print("valor funcion: "+str(x.best))
     print("ARREGLO: " + str(x.individuo.arreglo))

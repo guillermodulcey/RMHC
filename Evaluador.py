@@ -6,7 +6,7 @@ import math as m
 class Evaluador():
     def __init__(self, longitud, rangoInicial, rangoFinal, maximizar):
         self.longitudEntera = m.ceil(m.log2(rangoFinal-rangoInicial+1))
-        self.longitud = longitud
+        self.longitud =  self.longitudEntera + longitud
         self.rangoInicial = rangoInicial
         self.rangoFinal = rangoFinal
         self.maximizar = maximizar
