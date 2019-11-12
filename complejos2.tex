@@ -57,9 +57,9 @@ Por ejemplo:
 
 Es posible combinar las dos partes para representar un número real, para ello es necesario delimitar hasta donde va la parte entera y desde donde empieza la decimal.
 
-\subsection*{Óptimo local}
+\subsection*{Problemas de representación}
 
-Un optimo local consiste en un valor que el algoritmo reconoce como el mejor valor a pesar de que tenga opción de mejorar aún más. Por ejemplo, este algoritmo solo puede cambiar un bit a la vez, lo que puede ocasionar que si una solución requiere cambiar dos genes al tiempo, este no logré mejorar más:
+Un problema de representación consiste en que dado un valor, el algoritmo no puede mutar al siguiente valor sin la posibilidad de cambiar dos genes al tiempo.
 
 Por ejemplo se tienen 3 genes para buscar maximizar la función f(x) = x, donde el rango está entre 0 y 6:
 
@@ -71,7 +71,7 @@ Si el individuo llega al valor de 5:
 \begin{equation*}
     [1,0,1] = 5
 \end{equation*}
-Le es imposible salir de dicho óptimo local puesto que prender el gen faltante implica llegar a una respuesta fuera del rango. Así mismo apagar cualquier gen implica llegar a una peor respuesta.
+Le es imposible cambiar a la mejor solución, puesto que prender el gen faltante implica llegar a una respuesta fuera del rango. Así mismo apagar cualquier gen implica llegar a una peor respuesta.
 
 \section*{Implementación}
 

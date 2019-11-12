@@ -4,11 +4,10 @@ import sys as s
 import math as m
 
 class Evaluador():
-    def __init__(self, longitud, rangoInicial, rangoFinal, maximizar):
-        self.longitudEntera = m.ceil(m.log2(rangoFinal-rangoInicial+1))
+    def __init__(self, longitud, maximizar, funcion: Funcion):
+        self.funcion = funcion
+        self.longitudEntera = m.ceil(m.log2(funcion.rangoFinal-funcion.rangoInicial+1))
         self.longitud =  self.longitudEntera + longitud
-        self.rangoInicial = rangoInicial
-        self.rangoFinal = rangoFinal
         self.maximizar = maximizar
 
     def calcularFitness(self,arreglo):
@@ -31,23 +30,20 @@ class Evaluador():
         return valor,self.retornarFitness(valor)
 
     def verificarRango(self, numero):
-        if numero < self.rangoInicial or numero > self.rangoFinal:
+        if numero < self.funcion.rangoInicial or numero > self.funcion.rangoFinal:
             return False
         else:
             return True
     
     def obtenerValor(self, numero):
-        return self.rangoInicial + numero
+        return self.funcion.rangoInicial + numero
 
     def retornarFitness(self, valor):
-        if self.maximizar:
-            if self.verificarRango(valor):
-                return Funcion.funcion(valor)
+        if self.verificarRango(valor):
+            if self.maximizar:
+                return self.funcion.funcion(valor)
             else:
-                return s.float_info.min
+                return -self.funcion.funcion(valor)
         else:
-            if self.verificarRango(valor):
-                return -Funcion.funcion(valor)
-            else:
-                return -s.float_info.max
+            return -s.float_info.max
 

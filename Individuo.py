@@ -7,7 +7,6 @@ class Individuo():
 
     def __init__(self, longitud, semilla):
         self.longitud = longitud
-
         self.arreglo = []
 
         r.seed(semilla)
@@ -16,8 +15,5 @@ class Individuo():
 
     def mutar(self,posicion):
         auxiliar = c.copy(self.arreglo)
-        if auxiliar[posicion] == 0:
-            auxiliar[posicion] = 1
-        else:
-            auxiliar[posicion] = 0
+        auxiliar[posicion] = abs(auxiliar[posicion]-1)
         return auxiliar
