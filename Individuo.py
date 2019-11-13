@@ -10,10 +10,13 @@ class Individuo():
         self.arreglo = []
 
         r.seed(semilla)
-        for i in range(0,longitud):
-            self.arreglo.append(r.randint(0,1))
+        self.__generarIndividuo()
 
     def mutar(self,posicion):
         auxiliar = c.copy(self.arreglo)
         auxiliar[posicion] = abs(auxiliar[posicion]-1)
         return auxiliar
+
+    def __generarIndividuo(self):
+        for i in range(0,self.longitud):
+            self.arreglo.append(r.randint(0,1))
