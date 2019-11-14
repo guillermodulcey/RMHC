@@ -1,4 +1,5 @@
 from Funcion import Funcion
+from Individuo import Individuo
 
 import sys as s
 import math as m
@@ -11,13 +12,16 @@ class Evaluador():
         self.longitudTotal = self.longitud * self.funcion.cantidadVariables
         self.maximizar = maximizar
 
-    def calcularFitness(self,arreglo):
+    def calcularFitness(self,arreglo: Individuo):
         valores = []
         for i in range(0,self.funcion.cantidadVariables):
             variable = self.longitud * i
-            valor = self.__obtenerValor(self.__decodificarValor(arreglo,variable))
+            valor = self.obtenerValor(self.__decodificarValor(arreglo,variable))
             valores.append(valor)
         return valores,self.__retornarFitness(valores)
+
+    def obtenerValor(self, numero):
+        return self.funcion.rangoInicial + numero
 
     def __verificarRango(self, valores: list):
         enRango = True
@@ -26,9 +30,6 @@ class Evaluador():
                 enRango = False
                 break
         return enRango
-
-    def __obtenerValor(self, numero):
-        return self.funcion.rangoInicial + numero
 
     def __retornarFitness(self, valores: list):
         if self.__verificarRango(valores):
@@ -43,16 +44,16 @@ class Evaluador():
         cantidadEnteros = self.funcion.rangoFinal - self.funcion.rangoInicial + 1
         return m.ceil(m.log2(cantidadEnteros))
 
-    def __decodificarValor(self, arreglo, variable):
+    def __decodificarValor(self, arreglo: Individuo, variable):
         parteEntera = 0
         contador = self.longitudEntera - 1
         for i in range(0 + variable,self.longitudEntera + variable):
-            parteEntera += m.pow(2,contador) * arreglo[i]
+            parteEntera += m.pow(2,contador) * arreglo.arreglo[i]
             contador -= 1
         parteDecimal = 0
         contador = 1
         for i in range(self.longitudEntera + variable,self.longitud + variable):
-            parteDecimal += m.pow(2,-contador) * arreglo[i]
+            parteDecimal += m.pow(2,-contador) * arreglo.arreglo[i]
             contador += 1
         return parteEntera+parteDecimal
 

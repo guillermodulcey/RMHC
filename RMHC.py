@@ -16,23 +16,23 @@ class RMHC():
         
         self.individuo = Individuo(self.e.longitudTotal, semilla)
         
-        self.valor, self.best = self.e.calcularFitness(self.individuo.arreglo)
+        self.valor, self.best = self.e.calcularFitness(self.individuo)
 
     def ejecutar(self):
         if self.probabilidad > r.random():
             posicion = self.__elegirAlAzar()
-            mutacion = self.individuo.mutar(posicion)
+            mutacion = c.deepcopy(self.individuo).mutar(posicion)
             valor, fitnessMutacion = self.e.calcularFitness(mutacion)
             if self.best <= fitnessMutacion:
                 self.best = fitnessMutacion
-                self.individuo.arreglo = mutacion
+                self.individuo = mutacion
                 self.valor = valor
 
     def __elegirAlAzar(self):
         return int(r.random() * self.individuo.longitud)
 
-f = SenoCoseno(0,2*m.pi,2)
-e = Evaluador(10, True, f)
+f = SenoCoseno(0,2,2)
+e = Evaluador(0, True, f)
 
 for seed in range(0,100):
     x = RMHC(seed,1,e)

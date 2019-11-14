@@ -6,4 +6,5 @@ class SenoCoseno(Funcion):
         super(SenoCoseno, self).__init__(rangoInicial,rangoFinal,cantidadVariables)
 
     def funcion(self,valores: list) -> float:
-        return m.cos(valores[0]) + m.sin(valores[1])
+    	return valores[0]+ valores[1]
+        #return m.cos(valores[0]) + m.sin(valores[1])
