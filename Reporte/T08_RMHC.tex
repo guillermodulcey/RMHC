@@ -8,7 +8,7 @@
 \begin{document}
 \begin{titlepage}
 	\centering
-	\includegraphics[width=0.25\textwidth]{Figuras/LogoCinvesHeader.png}\par\vspace{2cm}
+	\includegraphics[scale=0.35]{../../../../Desktop/Reporte/logoCinvesHeader.png} \par\vspace{2cm}
 	{\scshape\LARGE Centro de Investigación y de Estudios Avanzados del IPN\par}
 	\vspace{2cm}	
 	{\huge\bfseries RMHC \par}
@@ -18,7 +18,7 @@
 	{\Large Miembros del equipo: \\Hernán Guillermo Dulcey Morán \\Karla Jacquelin Guzmán Sánchez\par}
 	\vfill
 
-	{\large 12 de Noviembre de 2019 \par}
+	{\large 19 de Noviembre de 2019 \par}
 \end{titlepage}
 
 
@@ -76,6 +76,14 @@ Le es imposible cambiar a la mejor solución, puesto que prender el gen faltante
 \section*{Implementación}
 
 El algoritmo RMHC se implementó en Python, con las siguientes características.
+
+Como componente principal se tienen dos clases abstractas: \textit{Heuristic} y \textit{ObjectiveFunction}.
+
+La primera será la clase padre para el algoritmo RMHC y algunos otros si se desea en un fúturo. La segunda es la clase padre de las funciones a evaluar, siendo sus hijos funciones especificas a evaluar.
+
+Para implementarlo se tomó como base el siguiente diagrama de clases:
+
+\begin{center}\includegraphics[scale=0.35]{../../../../Downloads/u7hdRAgQ.png}\end{center}
 
 \section*{Conclusión}
 
