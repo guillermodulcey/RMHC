@@ -9,7 +9,7 @@ class RMHC(Heuristic):
 
     def __init__(self, maximizar, funcion: ObjectiveFunction, probabilidad):
         self.maximizar = maximizar
-        self.longitudVariable = 0;
+        self.longitudVariable = 0
         self.probabilidad = probabilidad
 
         self.funcion = funcion
