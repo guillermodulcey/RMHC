@@ -4,9 +4,15 @@ from HeuristicFactory import HeuristicFactory
 
 import math
 
-f = ServicioPolinomial(0,2*math.pi,"x^2+y^3+cos(x)")
+f = ServicioPolinomial(0,2*math.pi,"sen(x)+cos(y)")
 
 hf = HeuristicFactory(f)
 
-hf.getHeuristic("RMHC", True).execute(10,100,10000)
+precision = 10
+semilla = 2
+iteraciones = 10000
 
+for i in range(0,10):
+    semilla = i
+    print(str(hf.getHeuristic("RMHC", False).execute(precision,semilla,iteraciones)))
+    print(str(hf.getHeuristic("ECLECTIC", False, 200).execute(precision,semilla,iteraciones)))

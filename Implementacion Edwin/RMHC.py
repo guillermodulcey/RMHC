@@ -43,19 +43,20 @@ class RMHC(Heuristic):
             valores.append(valor)
         return valores,self.__retornarFitness(valores)
 
-    def execute(self, precision, iteraciones, evaluaciones):
-        for i in range(1,iteraciones):
-            r.seed(i)
-            self.initialization(precision)
-            for j in range(1,evaluaciones):
-                if self.probabilidad > r.random():
-                    mutacion = self.recombine()
-                    valores, fitnessMutacion = self.decode(mutacion)
-                    if self.best <= fitnessMutacion:
-                        self.best = fitnessMutacion
-                        self.s = mutacion
-                        self.valores = valores
-            print("RMHC\nValores: "+str(self.valores)+"\nValor de la función: "+str(self.best)+"\nCadena: ["+str(self.s)+"]")
+    def execute(self, precision, semilla, evaluaciones):
+        r.seed(semilla)
+        self.initialization(precision)
+        for j in range(1,evaluaciones):
+            if self.probabilidad > r.random():
+                mutacion = self.recombine()
+                valores, fitnessMutacion = self.decode(mutacion)
+                if self.best <= fitnessMutacion:
+                    self.best = fitnessMutacion
+                    self.s = mutacion
+                    self.valores = valores
+        if(not self.maximizar):
+            self.best = -self.best
+        return valores, self.best
 
     ####### Metodos auxiliares #####
 

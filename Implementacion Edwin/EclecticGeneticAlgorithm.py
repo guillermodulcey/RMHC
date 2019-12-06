@@ -2,13 +2,15 @@ from Heuristic import Heuristic
 from ObjectiveFunction import ObjectiveFunction
 
 from ServicioPolinomial import ServicioPolinomial
+from SenoCoseno import SenoCoseno
 
 import random as r
 import math as m
 import sys as s
+import numpy as np
 
 class EclecticGeneticAlgorithm(Heuristic):
-    def __init__(self, maximizar, funcion: ObjectiveFunction, semilla, pm,  pc, n):
+    def __init__(self, maximizar, funcion: ObjectiveFunction, pm,  pc, n):
         self.maximizar = maximizar
         self.funcion = funcion
 
@@ -23,13 +25,15 @@ class EclecticGeneticAlgorithm(Heuristic):
 
         self.duplicated = False
 
-    def recombine(self,metodo: str):
+    def recombine(self,metodo: str,locus = 0, posicion = 0):
         if metodo == "MUTAR":
             bits = self.__escogerBits()
             for bit in bits:
                 self.p[bit] = self.__mutar(bit,bits[bit])
         if metodo == "COMBINAR":
-            pass
+            individuoA = self.n+posicion
+            individuoB = (2*self.n-1)-posicion
+            self.p[individuoA],self.p[individuoB] = self.__cruzar(individuoA,individuoB,locus)
 
     def initialization(self,precision, cantidad):
         for i in range(0,cantidad):
@@ -51,23 +55,22 @@ class EclecticGeneticAlgorithm(Heuristic):
             valoresVariables.append(valoresIndividuo)
         return valoresVariables,valoresFitness
 
-    def execute(self,precision,iteraciones):
+    def execute(self,precision,iteraciones,semilla):
+        r.seed(semilla)
         #Inicializar
         self.initialization(precision,self.n)
         #Evaluar
         self.valoresVariables,self.valoresFitness = self.decode(self.p)
         #Ordenar
         self.__quickSort(self.valoresFitness,0,len(self.valoresFitness)-1)
-
         contador = 0
         while contador < iteraciones:
-            print(self.p)
             self.__duplicar(self.p)
-            for i in range(0,self.n):
+            for i in range(0,int(self.n/2)):
                 aleatorio = r.random()
                 if aleatorio > self.pc:
                     locus = r.randint(0,self.l-1)
-                    ##To do: Combinar
+                    self.recombine("COMBINAR",locus,i)
             #Mutar
             self.recombine("MUTAR")
             #Evaluar
@@ -75,12 +78,35 @@ class EclecticGeneticAlgorithm(Heuristic):
             #Ordenar
             self.__quickSort(self.valoresFitness,0,len(self.valoresFitness)-1)
             self.__eliminarPeores(self.p)
-            print(self.valoresVariables)
-            print(self.p)
             contador += 1
-
+        if(not self.maximizar):
+            self.valoresFitness = self.__convert(self.valoresFitness)
+        return self.valoresVariables[0], self.valoresFitness[0]
 
     ####### Metodos auxiliares #####
+    def __cruzar(self,individuoA: str,individuoB :str,locus):
+        izquierdaA = []
+        medioB = []
+        l_2 = m.ceil(self.l/2)
+        aleatorio = r.randint(l_2,self.l-1)
+
+        listA = list(self.p[individuoA])
+        listB = list(self.p[individuoB])
+
+        derechaA = listA[aleatorio:len(listA)]
+        derechaB = listB[aleatorio:len(listB)]
+
+        izquierdaA = listA[0:l_2-len(derechaA)+1]
+        izquierdaB = listB[0:l_2-len(derechaB)+1]
+
+        medioA = listA[len(izquierdaA):aleatorio]
+        medioB = listB[len(izquierdaA):aleatorio]
+
+        nuevoA = "".join(izquierdaA) + "".join(medioB) + "".join(derechaA)
+        nuevoB = "".join(izquierdaB) + "".join(medioA) + "".join(derechaB)
+        
+        return nuevoA,nuevoB
+
     def __mutar(self,individuo,bit):
         slist = list(self.p[individuo])
         if slist[bit] == "1":
@@ -153,9 +179,12 @@ class EclecticGeneticAlgorithm(Heuristic):
                 break
         return enRango
 
+    def __convert(self,lst): 
+        lst = np.array(lst) 
+        return list(-lst)
+
     #### quicksort ###
 
-    ## Intercambiar elementos
     def __intercambiarElemento(self, arreglo: list, izquierda, derecha):
         temporal = arreglo[izquierda]
         arreglo[izquierda] = arreglo[derecha]
@@ -183,11 +212,3 @@ class EclecticGeneticAlgorithm(Heuristic):
             self.__quickSort(arreglo,izquierda,index-1)
             self.__quickSort(arreglo,index+1,derecha)
         return arreglo
-
-
-
-f = ServicioPolinomial(0,2*m.pi,"x^2+y^3+cos(x)")
-e = EclecticGeneticAlgorithm(True,f,1,0.001,0.8,1)
-e.execute(10,100)
-
-

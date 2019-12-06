@@ -314,5 +314,7 @@ def calcularFuncion(funcion: str, values: list):
     return result
 
 def encontrarVariables(funcion: str):
+    print("Definiendo: ")
     parser.parse(funcion)
+    print("Finaliza definicion exitosamente")
     return variables

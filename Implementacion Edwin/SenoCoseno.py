@@ -6,4 +6,6 @@ class SenoCoseno(ObjectiveFunction):
         super(SenoCoseno, self).__init__(rangoInicial,rangoFinal,cantidadVariables)
 
     def evaluate(self,valores: list) -> float:
-        return m.cos(valores[0]) + m.sin(valores[1])
+        resultado = 0
+        resultado += 100*m.pow((valores[1]-m.pow(valores[0],2)),2) + m.pow(1-valores[0],2)
+        return resultado
