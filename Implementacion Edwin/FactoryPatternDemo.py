@@ -12,6 +12,8 @@ precision = 10
 semilla = 4
 iteraciones = 10000
 
+
+
 for i in range(0,10):
     semilla = i
     print(str(hf.getHeuristic("RMHC", True).execute(precision,semilla,iteraciones)))

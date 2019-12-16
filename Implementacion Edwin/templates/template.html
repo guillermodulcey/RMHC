@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Optimización</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, select, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      margin: 15px 0;
+      font-weight: 400;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 3px;
+      }
+      form {
+      width: 100%;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 2px 5px #ccc; 
+      }
+      input, select, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(50% - 10px);
+      padding: 5px;
+      }
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      textarea {
+      width: calc(100% - 6px);
+ }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      .item:hover p, .item:hover i {
+      color: #095484;
+      }
+      input:hover, select:hover, textarea:hover {
+      box-shadow: 0 0 5px 0 #095484;
+      }
+      .btn-block {
+      margin-top: 20px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      -webkit-border-radius: 5px; 
+      -moz-border-radius: 5px; 
+      border-radius: 5px; 
+      background-color: #095484;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background-color: #0666a3;
+      }
+      @media (min-width: 568px) {
+      .name-item, .city-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .name-item input, .city-item input {
+      width: calc(50% - 20px);
+      }
+      .city-item select {
+      width: calc(50% - 8px);
+      }
+
+      input[type="radio"]{
+      width: calc(20% - 4px);
+      }
+      .etiquetas{
+        width: calc(8% - 4px);
+      }
+      #cuadro{
+        border: 1pt solid black;
+        padding-top: 5pt;
+        padding-bottom: 5pt; 
+      }
+      .radioB{
+        padding-top: calc(30% - 4px);
+        padding-bottom: calc(30% - 4px);
+      }
+      .testbox{
+        width: calc(100%);
+      }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="testbox">
+      <form action="/resultados">
+
+        <div class="row">
+          <legend>Heurísticas</legend>
+          <div class="col-md-8">
+            
+            <div class="col-md-4">
+              <div class="radioB"> Heurística </p>
+                <input type="radio" name="heuristica" value="RMHC" checked>RMHC<br>
+                <input type="radio" name="heuristica" value="ECLECTIC">EGA<br>
+              </div>
+            </div>
+            <div id="EGA" class="col-md-6" >
+              Iteraciones: <input type="number" name="iteraciones" value="300"></p>
+              Individuos: <input type="number" name="individuos" value="100"></p>
+              Pc <input type="range" name="pCruce"></p>
+              Pm <input type="range" name="pMutacion"></p>
+            </div>
+            <div id="RMHC" class="col-md-6" hidden>
+              Precisión <input type="number" name="precision" value="300"></p>
+              Semilla <input type="number" name="semilla" value="100"></p>
+              Iteraciones <input type="number" name="iteraciones"></p>
+            </div>
+            <div class="col-md-8">
+              <p>Optimización: </p>
+              <select name="maximizar">
+                <option value = "1">Maximizar</option>
+                <option value = "0">Minimizar</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="row">
+            <div class="col-md-8">
+            <legend>Funciones</legend>
+            Función:
+            <input type="text" name="funcion"/><p>
+
+            Rango Inicial:
+            <input type="text" name="rangoInicial"/><p>
+
+            Rango Final:
+            <input type="text" name="rangoFinal"/>
+          </div>
+        </div>
+          <div class="btn-block">
+            <button type="submit" href="/">Optimizar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
