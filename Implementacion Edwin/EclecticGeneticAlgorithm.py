@@ -164,12 +164,14 @@ class EclecticGeneticAlgorithm(Heuristic):
     
     def __retornarFitness(self, valores: list):
         if self.__verificarRango(valores):
+            valor, valido = self.funcion.evaluate(valores)
             if self.maximizar:
-                return self.funcion.evaluate(valores)
+                if valido:
+                    return valor
             else:
-                return -self.funcion.evaluate(valores)
-        else:
-            return -s.float_info.max
+                if valido:
+                    return -valor
+        return -s.float_info.max
     
     def __verificarRango(self, valores: list):
         enRango = True

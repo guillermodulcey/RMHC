@@ -6,6 +6,7 @@
 # -----------------------------------------------------------------------------
 
 import math as m
+import sys
 
 tokens = (
     'NAME','NUMBER','DECIMAL',
@@ -184,6 +185,8 @@ def p_statement_square_root(t):
     'expression : SQRT expression'
     try:
         t[0] = m.sqrt(t[2])
+    except ValueError:
+        t[0] = -sys.float_info.max
     except:
         print("Syntax Error: Square root ")
     
@@ -202,7 +205,11 @@ def p_expression_binop(t):
     if t[2] == '+'  : t[0] = t[1] +  t[3]
     elif t[2] == '-': t[0] = t[1] -  t[3]
     elif t[2] == '*': t[0] = t[1] *  t[3]
-    elif t[2] == '/': t[0] = t[1] /  t[3]
+    elif t[2] == '/': 
+        try:
+            t[0] = t[1] /  t[3]
+        except:
+            t[0] = -sys.float_info.max
     elif t[2] == '^': t[0] = t[1] ** t[3]
 
 ##Trigonometry####################################################
@@ -309,9 +316,12 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 def calcularFuncion(funcion: str, values: list):
+    valid = True
     names.update(values)
     result = parser.parse(funcion)
-    return result
+    if result == -sys.float_info.max:
+        valid = False
+    return result, valid
 
 def encontrarVariables(funcion: str):
     print("Definiendo: ")

@@ -4,6 +4,7 @@ from ObjectiveFunction import ObjectiveFunction
 import math as m
 import sys as s
 import random as r
+import copy
 
 class RMHC(Heuristic):
 
@@ -15,7 +16,6 @@ class RMHC(Heuristic):
         self.funcion = funcion
 
         self.best = ""
-        self.valores = []
 
     def recombine(self):
         posicion = self.__elegirAlAzar()
@@ -45,6 +45,7 @@ class RMHC(Heuristic):
 
     def execute(self, precision, semilla, evaluaciones):
         r.seed(semilla)
+        self.valores = []
         self.initialization(precision)
         for j in range(1,evaluaciones):
             if self.probabilidad > r.random():
@@ -56,7 +57,7 @@ class RMHC(Heuristic):
                     self.valores = valores
         if(not self.maximizar):
             self.best = -self.best
-        return valores, self.best
+        return self.valores, self.best
 
     ####### Metodos auxiliares #####
 
@@ -76,12 +77,14 @@ class RMHC(Heuristic):
 
     def __retornarFitness(self, valores: list):
         if self.__verificarRango(valores):
+            valor, valido = self.funcion.evaluate(valores)
             if self.maximizar:
-                return self.funcion.evaluate(valores)
+                if valido:
+                    return valor
             else:
-                return -self.funcion.evaluate(valores)
-        else:
-            return -s.float_info.max
+                if valido:
+                    return -valor
+        return -s.float_info.max
 
     def __calcularLongitudEntera(self):
         cantidadEnteros = self.funcion.rangoFinal - self.funcion.rangoInicial + 1
