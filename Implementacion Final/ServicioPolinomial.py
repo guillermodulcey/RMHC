@@ -7,6 +7,7 @@ class ServicioPolinomial(ObjectiveFunction):
     def __init__(self,rangoInicial,rangoFinal,expresion):
         super(ServicioPolinomial, self).__init__(rangoInicial,rangoFinal,cantidadVariables=0)
         self.expresion = expresion
+        calc.vaciarVariables()
         self.variables = calc.encontrarVariables(self.expresion)
         self.variables = self.__eliminarRepetidos(self.variables)
         self.cantidadVariables = len(self.variables)

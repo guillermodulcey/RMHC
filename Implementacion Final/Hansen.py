@@ -10,6 +10,6 @@ class Hansen(ObjectiveFunction):
         for i in range(0,5):
             resultado2 = 0
             for j in range(0,5):
-                resultado2 += (i+1)*m.cos((i+2)*valores[1]+i+1)
+                resultado2 += (j+1)*m.cos((j+2)*valores[1]+j+1)
             resultado += (i+1)*m.cos(i*valores[0]+i+1)*resultado2
         return resultado, True

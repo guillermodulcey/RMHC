@@ -328,3 +328,7 @@ def encontrarVariables(funcion: str):
     parser.parse(funcion)
     print("Finaliza definicion exitosamente")
     return variables
+
+def vaciarVariables():
+    names.clear()
+    variables.clear()

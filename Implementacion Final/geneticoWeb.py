@@ -1,8 +1,8 @@
 import flask, requests, json, math
 from flask import request, jsonify, render_template
 
-from ServicioPolinomial import ServicioPolinomial
 from HeuristicFactory import HeuristicFactory
+from FunctionFactory import FunctionFactory
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -59,12 +59,29 @@ def fact():
     else:
         return "Error: No se ha declarado el rangoFinal."
 
+    if 'Opfuncion' in request.args:
+        opFuncion = request.args['Opfuncion']
+    else:
+        return "Error."
+
+    funciones = FunctionFactory()
+
+    if opFuncion == "Hansen":
+        f = funciones.getHeuristic("HANSEN",rangoInicial,rangoFinal)
+    elif opFuncion == "DeJong":
+        f = funciones.getHeuristic("DEJONG",rangoInicial,rangoFinal,2)
+    elif opFuncion == "AxisParallel":
+        f = funciones.getHeuristic("AXISPARALLEL",rangoInicial,rangoFinal,2)
+    elif opFuncion == "RotatedHyper":
+        f = funciones.getHeuristic("ROTATEDHYPER",rangoInicial,rangoFinal,2)
+    else:
+        funcion = funcion.replace(" ","+")
+        f = funciones.getHeuristic("POLINOMIO",rangoInicial,rangoFinal,0,funcion)
+
     if maximizar == 1:
         maximizar = True
     else:
         maximizar = False
-
-    f = ServicioPolinomial(rangoInicial,rangoFinal,funcion)
 
     hf = HeuristicFactory(f)
 
@@ -75,21 +92,19 @@ def fact():
             return "Error: No se ha declarado la población."
 
         if 'pCruce' in request.args:
-            pCruce = float(request.args['pCruce'])
+            pCruce = float(request.args['pCruce'])/100
         else:
             return "Error: No se ha declarado la probabilidad de cruce."
 
         if 'pMutacion' in request.args:
-            pMutacion = float(request.args['pMutacion'])
+            pMutacion = float(request.args['pMutacion'])/100
         else:
             return "Error: No se ha declarado la probabilidad de mutación."
-
         variables,valoresFuncion = hf.getHeuristic(heuristica, maximizar, poblacion, pMutacion, pCruce).execute(precision,semilla,iteraciones)
-
     else:
         variables,valoresFuncion = hf.getHeuristic(heuristica, maximizar).execute(precision,semilla,iteraciones)
-
-    return jsonify(variables=variables, valores=valoresFuncion)
+    
+    return jsonify(variables=variables, valores=valoresFuncion, funcion=funcion)
 
 @app.route('/resultados', methods=['GET'])
 def res():
@@ -136,7 +151,12 @@ def res():
     else:
         return "Error: No se ha declarado el rangoFinal."
 
-    parametros = "?heuristica="+heuristica+"&funcion="+funcion+"&precision="+precision+"&semilla="+semilla+"&iteraciones="+iteraciones+"&maximizar="+maximizar+"&rangoInicial="+rangoInicial+"&rangoFinal="+rangoFinal
+    if 'Opfuncion' in request.args:
+        opFuncion = request.args['Opfuncion']
+    else:
+        return "Error."
+
+    parametros = "?Opfuncion="+opFuncion+"&heuristica="+heuristica+"&funcion="+funcion+"&precision="+precision+"&semilla="+semilla+"&iteraciones="+iteraciones+"&maximizar="+maximizar+"&rangoInicial="+rangoInicial+"&rangoFinal="+rangoFinal
 
     if heuristica == "ECLECTIC":
         if 'poblacion' in request.args:
@@ -158,7 +178,8 @@ def res():
     
     info = requests.get('http://localhost:5000/api/resources/genetic'+parametros)
     result = json.loads(info.content)
+    pfuncion = result["funcion"].replace("+","&#43;")
 
-    return render_template('resultados.html', variables=result["variables"], valores=result["valores"])
+    return render_template('resultados.html', variables=result["variables"], valores=result["valores"],funcion=result["funcion"])
 
 app.run()

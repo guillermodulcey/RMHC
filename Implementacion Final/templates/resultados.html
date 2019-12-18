@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Restaurant Complaint Form</title>
+    <title>Resultados</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
       html, body {
       min-height: 100%;
+      background-color: #095484;
       }
-      body, div, form, input, select, p { 
+      body, div, form, input, p { 
       padding: 0;
       margin: 0;
       outline: none;
       font-family: Roboto, Arial, sans-serif;
       font-size: 14px;
-      color: #666;
+      color: black;
       line-height: 22px;
       }
-      h1 {
+      h1{
       margin: 15px 0;
       font-weight: 400;
+      text-align: center;
       }
       .testbox {
       display: flex;
@@ -27,43 +30,32 @@
       align-items: center;
       height: inherit;
       padding: 3px;
+      font-size: 13px;
+      margin-top: calc(5% - 4px);
       }
       form {
       width: 100%;
       padding: 20px;
       background: #fff;
       box-shadow: 0 2px 5px #ccc; 
+      border-radius: 15px;
       }
-      input, select, textarea {
+      input {
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 3px;
-      }
-      input {
       width: calc(100% - 10px);
       padding: 5px;
       }
-      select {
-      width: 100%;
-      padding: 7px 0;
-      background: transparent;
-      }
-      textarea {
-      width: calc(100% - 6px);
- }
-      .item {
-      position: relative;
-      margin: 10px 0;
-      }
-      .item:hover p, .item:hover i {
-      color: #095484;
-      }
-      input:hover, select:hover, textarea:hover {
+      input:hover {
       box-shadow: 0 0 5px 0 #095484;
       }
-      .btn-block {
-      margin-top: 20px;
-      text-align: center;
+      input[type="text"],p{
+        text-align: center;
+      }
+      p{
+        font-size: 18px;
+        color: black;
       }
       button {
       width: 150px;
@@ -72,13 +64,10 @@
       -webkit-border-radius: 5px; 
       -moz-border-radius: 5px; 
       border-radius: 5px; 
-      background-color: #095484;
+      background-color: #fff;
       font-size: 16px;
-      color: #fff;
+      color: #095484;
       cursor: pointer;
-      }
-      button:hover {
-      background-color: #0666a3;
       }
       @media (min-width: 568px) {
       .name-item, .city-item {
@@ -95,21 +84,43 @@
       }
     </style>
   </head>
-  <body>
+  <body onload="cargar()">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
     <div class="testbox">
       <form>
-        <h1>Restaurant Complaint Form</h1>
+        <h1>Resultados de la función "{{ funcion }}"</h1>
         <div class="item">
-          <p>Establishment Name</p>
-          <input type="text" name="variables" value="{{ variables }}" />
-
-          <p>Establishment</p>
-          <input type="text" name="valores" value="{{ valores }}" />
+          <p>Valor óptimo de la función</p>
+          <input type="text" name="valores" value="{{ valores }}" disabled />
         </div>
-        <div class="btn-block">
-          <button type="submit" href="/">SEND</button>
+        <div class="table-responsive-lg">
+          <table class="table table-dark" id="tablaResultados">
+            <thead>
+              <tr>
+                <th scope="col"># Variable</th>
+                <th scope="col">Valor</th>
+              </tr>
+            </thead>
+            </tbody>
+          </table>
+        </div>
         </div>
       </form>
+      <div class="testbox">
+        <button type="submit" onclick="location.href='/'">Regresar</button>
+      </div>
     </div>
+  <script>
+    function cargar(){
+      let v = {{ variables }};
+      for(let i=0;i<v.length;i++) {
+        var $tr = $('<tr> <th scope="row">'+(i+1)+'</th> <td> '+v[i]+'</td></tr>');
+        $("#tablaResultados").append($tr);
+      }
+    }
+  </script>
   </body>
 </html>
+
+<!-- cd Documents/Github/RMHC/"Implementacion Edwin" -->

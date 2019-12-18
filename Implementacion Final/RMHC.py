@@ -16,6 +16,7 @@ class RMHC(Heuristic):
         self.funcion = funcion
 
         self.best = ""
+        self.s = ""
 
     def recombine(self):
         posicion = self.__elegirAlAzar()
