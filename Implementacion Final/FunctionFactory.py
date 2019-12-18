@@ -1,8 +1,8 @@
-from ServicioPolinomial import ServicioPolinomial
-from Hansen import Hansen
-from DeJong import DeJong
-from AxisParallel import AxisParallel
-from RotatedHyper import RotatedHyper
+from Funciones.ServicioPolinomial import ServicioPolinomial
+from Funciones.Hansen import Hansen
+from Funciones.DeJong import DeJong
+from Funciones.AxisParallel import AxisParallel
+from Funciones.RotatedHyper import RotatedHyper
 
 class FunctionFactory():
     def __init__(self):

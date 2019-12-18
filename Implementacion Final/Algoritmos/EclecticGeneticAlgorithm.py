@@ -1,9 +1,6 @@
 from Heuristic import Heuristic
 from ObjectiveFunction import ObjectiveFunction
 
-from ServicioPolinomial import ServicioPolinomial
-from SenoCoseno import SenoCoseno
-
 import random as r
 import math as m
 import sys as s

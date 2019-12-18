@@ -1,6 +1,6 @@
 from ObjectiveFunction import ObjectiveFunction
-from RMHC import RMHC
-from EclecticGeneticAlgorithm import EclecticGeneticAlgorithm
+from Algoritmos.RMHC import RMHC
+from Algoritmos.EclecticGeneticAlgorithm import EclecticGeneticAlgorithm
 
 class HeuristicFactory():
     def __init__(self, funcion: ObjectiveFunction):
