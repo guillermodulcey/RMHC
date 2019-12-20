@@ -24,10 +24,18 @@ def fact():
     else:
         return "Error: No se ha declarado la heurística."
 
-    if 'funcion' in request.args:
-        funcion = str(request.args['funcion'])
+    if 'Opfuncion' in request.args:
+        opFuncion = request.args['Opfuncion']
+        if opFuncion == "otra":
+            if 'funcion' in request.args:
+                funcion = str(request.args['funcion'])
+            else:
+                return "Error: No se ha declarado la función."
+        else:
+            funcion = opFuncion
     else:
-        return "Error: No se ha declarado la función."
+        return "Error."
+
 
     if 'precision' in request.args:
         precision = int(request.args['precision'])
@@ -59,10 +67,6 @@ def fact():
     else:
         return "Error: No se ha declarado el rangoFinal."
 
-    if 'Opfuncion' in request.args:
-        opFuncion = request.args['Opfuncion']
-    else:
-        return "Error."
 
     funciones = FunctionFactory()
 
@@ -116,10 +120,18 @@ def res():
     else:
         return "Error: No se ha declarado la heurística."
 
-    if 'funcion' in request.args:
-        funcion = (request.args['funcion'])
+    if 'Opfuncion' in request.args:
+        opFuncion = request.args['Opfuncion']
+        if opFuncion == "otra":
+            if 'funcion' in request.args:
+                funcion = str(request.args['funcion'])
+            else:
+                return "Error: No se ha declarado la función."
+        else:
+            pass
+            funcion = opFuncion
     else:
-        return "Error: No se ha declarado la función."
+        return "Error."
 
     if 'precision' in request.args:
         precision = (request.args['precision'])
@@ -151,10 +163,6 @@ def res():
     else:
         return "Error: No se ha declarado el rangoFinal."
 
-    if 'Opfuncion' in request.args:
-        opFuncion = request.args['Opfuncion']
-    else:
-        return "Error."
 
     parametros = "?Opfuncion="+opFuncion+"&heuristica="+heuristica+"&funcion="+funcion+"&precision="+precision+"&semilla="+semilla+"&iteraciones="+iteraciones+"&maximizar="+maximizar+"&rangoInicial="+rangoInicial+"&rangoFinal="+rangoFinal
 

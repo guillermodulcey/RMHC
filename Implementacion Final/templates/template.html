@@ -222,7 +222,7 @@
               </div>
 
               <p>Expresión:</p>
-              <input id="campoFuncion" type="text" name="funcion"/><p>
+              <input id="campoFuncion" type="text" name="funcion" value="x" required /><p>
 
               <p>Rango Inicial:</p>
               <input type="text" name="rangoInicial" value="0" /><p>
@@ -241,15 +241,16 @@
     function modificarFuncion(){
       $("#campoFuncion").prop('disabled',true);
       if($("#hansen").is(":checked")){
-        $("#campoFuncion").val("sum( ( i+1 )cos( ix_0 + i + 1), i=0, 4 )*sum( (j+1)cos( ( j+2 )x_1 + j +1), j=0, 4 )");
+        $("#campoFuncion").val("Hansen");
       }else if($("#dejong").is(":checked")){
-        $("#campoFuncion").val("sum( (x_i)^2, i=1, n )");
+        $("#campoFuncion").val("De Jong");
       }else if($("#axis").is(":checked")){
-        $("#campoFuncion").val("sum( i*(x_i)^2,i=1, n )");
+        $("#campoFuncion").val("Axis Parallel");
       }else if($("#rotated").is(":checked")){
-        $("#campoFuncion").val("sum( (x_i)^2, i=1, n )*sum( x_j, j=1, i )^2");
+        $("#campoFuncion").val("Rotated Hyper");
       }else{
         $("#campoFuncion").val(""); $("#campoFuncion").prop('disabled',false);
+        $("#campoFuncion").focus();
       }
     }
     
